@@ -6,7 +6,6 @@
  * Project Page: http://www.github.com/jaitsu87/jQuery-StyledForm
  * Licensed Under the GPL License (http://www.gnu.org/licenses/gpl-3.0.html)
  * Version 1.0 (2012)
- *
  */
 (function($) {
 
@@ -45,15 +44,16 @@
 
         var $selects = $container.find(selectQuery);
         $.each($selects, function(i, select) {
-            var $options = $(select).find('option');
+            var $option = $(select).find('option:selected');
 
+            var attributeName = $.styledForm._canonicalize($(select).attr('name'));
             var $span = $('<span>', {
                 class: 'select',
-                id: 'styled-select-' + $(select).attr('name')
+                id: 'styled-select-' + attributeName
             });
 
             var selectWidth = $(select).width() + config.selectArrowWidth;
-            $span.append($options.first().text());
+            $span.append($option.text());
             $span.css('width', selectWidth);
 
             var $arrowSpan = $('<span>', {
@@ -62,6 +62,7 @@
             $span.append($arrowSpan);
             $(select).before($span);
             $(select).css('width', selectWidth);
+            $(select).parent().css('width', selectWidth);
 
             if ($(select).attr('disabled')) {
                 $(select).prev().addClass('disabled');
@@ -175,12 +176,12 @@
             }
 
             var $selectedOption = $element.find('option:selected');
-            $('#styled-select-' + $element.attr('name')).html($selectedOption.text() + '<span class="select-arrow"></span>');
+            var attributeName = $.styledForm._canonicalize($element.attr('name'));
+            $(this).find('#styled-select-' + attributeName).html($selectedOption.text() + '<span class="select-arrow"></span>');
         },
 
         /**
-         * Returns true if the given jQuery object is a wrapper for a
-         * styled input element
+         * Returns true if the given jQuery object is a wrapper for a styled input element
          *
          * @param {jQuery} $element A jquery wrapper of an input or select element
          *
@@ -193,6 +194,17 @@
             }
 
             return true;
+        },
+
+        /**
+         * Canonicalizes a string ready for attribute use
+         *
+         * @param {String} string The string to canonicalize
+         *
+         * @private
+         */
+        _canonicalize : function(string) {
+            return $.trim(string.replace('[', '').replace(']', '-'));
         }
     };
 
