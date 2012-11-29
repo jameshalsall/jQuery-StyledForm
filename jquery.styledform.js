@@ -5,7 +5,7 @@
  *
  * Project Page: http://www.github.com/jaitsu87/jQuery-StyledForm
  * Licensed Under the GPL License (http://www.gnu.org/licenses/gpl-3.0.html)
- * Version 1.0 (2012)
+ * Version 0.8 (2012)
  */
 (function($) {
 
