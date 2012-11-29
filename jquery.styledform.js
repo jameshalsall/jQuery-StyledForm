@@ -99,6 +99,9 @@
          * @param {Object} e The click event object
          */
         beforeClick : function(e) {
+            if (e.which && e.which == 3) {
+                return; //ignore right click
+            }
             var config = $.styledForm.config;
             var $target = $(e.target);
             var $element = $target.next();
