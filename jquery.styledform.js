@@ -48,8 +48,8 @@
 
             var attributeName = $.styledForm._canonicalize($(select).attr('name'));
             var $span = $('<span>', {
-                class: 'select',
-                id: 'styled-select-' + attributeName
+                "class": "select",
+                "id": "styled-select-" + attributeName
             });
 
             var selectWidth = $(select).width() + config.selectArrowWidth;
@@ -57,7 +57,7 @@
             $span.css('width', selectWidth);
 
             var $arrowSpan = $('<span>', {
-                class: 'select-arrow'
+                "class": "select-arrow"
             });
             $span.append($arrowSpan);
             $(select).before($span);
