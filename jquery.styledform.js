@@ -62,7 +62,10 @@
             $span.append($arrowSpan);
             $(select).before($span);
             $(select).css('width', selectWidth);
-            $(select).parent().css('width', selectWidth);
+            var $p = $(select).parent();
+            if (!$p.is('form')) {
+                $p.css('width', selectWidth);
+            }
 
             if ($(select).attr('disabled')) {
                 $(select).prev().addClass('disabled');
