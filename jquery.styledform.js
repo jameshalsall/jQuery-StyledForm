@@ -5,7 +5,7 @@
  *
  * Project Page: http://www.github.com/jaitsu87/jQuery-StyledForm
  * Licensed Under the GPL License (http://www.gnu.org/licenses/gpl-3.0.html)
- * Version 0.8 (2012)
+ * Version 0.8.1 (2013)
  */
 (function($) {
 
@@ -172,15 +172,29 @@
          * @param {Object} e The change event object
          */
         change : function(e) {
+            var config = $.styledForm.config;
             var $element = $(e.target);
+            var type = $element.attr('type');
 
             if (!$.styledForm._isStyledElement($element)) {
                 return;
             }
 
-            var $selectedOption = $element.find('option:selected');
             var attributeName = $.styledForm._canonicalize($element.attr('name'));
-            $(this).find('#styled-select-' + attributeName).html($selectedOption.text() + '<span class="select-arrow"></span>');
+
+            if (type == 'checkbox') {
+                var $target = $element.parent().find('.checkbox');
+                if ($element.attr('checked')) {
+                    $target.css('background-position', '0 -' + (config.checkboxHeight * 2) + 'px');
+                    $element.removeAttr('checked');
+                } else {
+                    $target.css('background-position', '0 0');
+                    $element.attr('checked', 'checked');
+                }
+            } else if (type != 'radio') {
+                var $selectedOption = $element.find('option:selected');
+                $(this).find('#styled-select-' + attributeName).html($selectedOption.text() + '<span class="select-arrow"></span>');
+            }
         },
 
         /**
