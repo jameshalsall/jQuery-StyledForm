@@ -3,9 +3,10 @@
  *
  * Inspired by styledinput.js by Ryan Fait (http://ryanfait.com)
  *
+ * Author: James Halsall <james.t.halsall@googlemail.com>
  * Project Page: http://www.github.com/jaitsu87/jQuery-StyledForm
  * Licensed Under the GPL License (http://www.gnu.org/licenses/gpl-3.0.html)
- * Version 0.8.1 (2013)
+ * Version 0.8.2
  */
 (function($) {
 
@@ -33,6 +34,11 @@
                 }
                 $span.css('background-position', '0 -' + (height * 2) + 'px');
             }
+
+            if ($(input).attr('type') == 'radio') {
+                $span.attr('data-field-name', $(input).attr('name'));
+            }
+
             $(input).before($span);
 
             if ($(input).attr('disabled')) {
