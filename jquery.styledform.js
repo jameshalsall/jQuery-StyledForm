@@ -24,7 +24,7 @@
         $.each($inputs, function(i, input) {
             var $span = $('<span>').addClass($(input).attr('type'));
 
-            if ($(input).attr('checked')) {
+            if ($(input).prop('checked')) {
                 var height;
                 if ($(input).attr('type') == 'checkbox') {
                     height = config.checkboxHeight;
@@ -120,7 +120,7 @@
                 var heightVar = (type == 'checkbox') ? config.checkboxHeight : config.radioHeight;
                 var height = heightVar;
 
-                if ($target.attr('checked')) {
+                if ($target.prop('checked')) {
                     height = heightVar * 3;
                 }
                 backgroundString += height + 'px';
@@ -135,6 +135,9 @@
          * @param e {Object} The click event object
          */
         afterClick : function(e) {
+            if (e.which && e.which == 3) {
+                return; //ignore right click
+            }
             var config = $.styledForm.config;
             var $target = $(e.target);
             var $element = $target.next('input');
@@ -154,14 +157,14 @@
                     }
                 });
                 $target.css('background-position', '0 -' + (config.radioHeight * 2) + 'px');
-                $element.attr('checked', 'checked');
+                $element.prop('checked', true);
             } else if (type == 'checkbox') {
-                if ($element.attr('checked')) {
+                if ($element.prop('checked')) {
                     $target.css('background-position', '0 0');
                     $element.removeAttr('checked');
                 } else {
                     $target.css('background-position', '0 -' + (config.checkboxHeight * 2) + 'px');
-                    $element.attr('checked', 'checked');
+                    $element.prop('checked', true);
                 }
             }
         },
@@ -184,12 +187,12 @@
 
             if (type == 'checkbox') {
                 var $target = $element.parent().find('.checkbox');
-                if ($element.attr('checked')) {
+                if ($element.prop('checked')) {
                     $target.css('background-position', '0 -' + (config.checkboxHeight * 2) + 'px');
                     $element.removeAttr('checked');
                 } else {
                     $target.css('background-position', '0 0');
-                    $element.attr('checked', 'checked');
+                    $element.prop('checked', true);
                 }
             } else if (type != 'radio') {
                 var $selectedOption = $element.find('option:selected');
