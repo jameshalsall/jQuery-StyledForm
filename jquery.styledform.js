@@ -3,10 +3,10 @@
  *
  * Inspired by styledinput.js by Ryan Fait (http://ryanfait.com)
  *
- * Author: James Halsall <james.t.halsall@googlemail.com>
- * Project Page: http://www.github.com/jaitsu87/jQuery-StyledForm
- * Licensed Under the GPL License (http://www.gnu.org/licenses/gpl-3.0.html)
- * Version 0.8.2
+ * @author  James Halsall <james.t.halsall@googlemail.com>
+ * @link    http://www.github.com/jaitsu87/jQuery-StyledForm
+ * @license GPL (http://www.gnu.org/licenses/gpl-3.0.html)
+ * @version 0.9
  */
 (function($) {
 
@@ -115,6 +115,13 @@
             var config = $.styledForm.config;
             var $target = $(e.target);
             var $element = $target.next();
+
+            // user has clicked on the label
+            if ($target.attr('for')) {
+                $element = $('#' + $target.attr('for'));
+                $target = $element.prev('span');
+            }
+
             var type = $target.attr('class');
 
             if ($element.attr('disabled') || !$.styledForm._isStyledElement($element)) {
@@ -147,6 +154,13 @@
             var config = $.styledForm.config;
             var $target = $(e.target);
             var $element = $target.next('input');
+
+            // user has clicked on the label
+            if ($target.attr('for')) {
+                $element = $('#' + $target.attr('for'));
+                $target = $element.prev('span');
+            }
+
             var type = $element.attr('type');
 
             if ($element.attr('disabled') || !$.styledForm._isStyledElement($element)) {
