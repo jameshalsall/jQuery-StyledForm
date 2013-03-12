@@ -1,6 +1,6 @@
 {
   "name": "jquery-styledform",
-  "version": "0.9",
+  "version": "0.9.1",
   "main": ["./src/jquery.styledform.min.js", "./src/jquery.styledform.js"],
   "dependencies": {
     "jquery": ">=1.7.2"
