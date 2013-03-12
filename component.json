@@ -1,0 +1,8 @@
+{
+  "name": "jQuery StyledForm",
+  "version": "0.9",
+  "main": "jquery.styledform.pack.js",
+  "dependencies": {
+    "jquery": ">=1.7.2"
+  }
+}
