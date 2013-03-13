@@ -6,8 +6,8 @@ StyledForm is intended to be a lightweight form transformation library that does
 Currently, it supports the transformation of:
 
 * `<select>` elements
-* `<input type="radio"> elements
-* `<input type="checkbox"` elements
+* `<input type="radio">` elements
+* `<input type="checkbox">` elements
 
 # Installation #
 
