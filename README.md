@@ -27,7 +27,8 @@ Currently options are set statically (as is typical of a form style across a web
         checkboxHeight: 22,
         radioHeight: 22,
         selectArrowWidth: 30,
-        styledClass: ''
+        styledClass: '',
+        pollFrequency: 1000
     };
 
 Options are as follows:
@@ -36,6 +37,7 @@ Options are as follows:
 * `radioHeight` - The height of the image that represents a radio button (defaults to 22px)
 * `selectArrowWidth` - The height of the image that represents a select box arrow (defaults to 30px)
 * `styledClass` - If this is set, only elements that have the given class will be transformed by StyledForm. By default all form elements are styled.
+* `pollFrequency` - The frequency (in milliseconds) that styledForm will poll the styled elements for changes. This is useful if you plan on manipulating the original `<input>` and `<select>` elements, as it will keep the styled counterparts in sync. Setting this to `false` will disable the polling.
 
 To style a form, you simply run:
 
