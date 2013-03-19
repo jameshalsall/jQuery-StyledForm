@@ -6,13 +6,13 @@
  * @author  James Halsall <james.t.halsall@googlemail.com>
  * @link    http://www.github.com/jaitsu87/jQuery-StyledForm
  * @license GPL (http://www.gnu.org/licenses/gpl-3.0.html)
- * @version 1.0.0
+ * @version 1.1
  */
 (function($) {
 
     $.fn.styledForm = function() {
 
-        var config = $.styledForm.config, $container = $(this), inputQuery = '', selectQuery;
+        var $sf = $.styledForm, config = $sf.config, $container = $(this), inputQuery = '', selectQuery;
         if (config.styledClass) {
             inputQuery = 'input.' + config.styledClass + '[type="checkbox"], input.' + config.styledClass + '[type="radio"]';
             selectQuery = 'select.' + config.styledClass;
@@ -46,13 +46,14 @@
             }
 
             $(input).css('display', 'none');
+            $sf.addElement($span);
         });
 
         var $selects = $container.find(selectQuery);
         $.each($selects, function(i, select) {
             var $option = $(select).find('option:selected');
 
-            var attributeName = $.styledForm._canonicalize($(select).attr('name'));
+            var attributeName = $sf._canonicalize($(select).attr('name'));
             var $span = $('<span>', {
                 "class": "select",
                 "id": "styled-select-" + attributeName
@@ -76,12 +77,17 @@
             if ($(select).attr('disabled')) {
                 $(select).prev().addClass('disabled');
             }
+
+            $sf.addElement($span);
         });
 
         // we bind events on the container, and let them bubble
-        $container.on('change', $.styledForm.change);
-        $container.on('mousedown', $.styledForm.beforeClick);
-        $container.on('mouseup', $.styledForm.afterClick);
+        $container.on('change', $sf.change);
+        $container.on('mousedown', $sf.beforeClick);
+        $container.on('mouseup', $sf.afterClick);
+        if (config.pollFrequency !== false) {
+            setInterval($sf.poll, config.pollFrequency);
+        }
     };
 
     /**
@@ -100,7 +106,49 @@
             checkboxHeight: 22,
             radioHeight: 22,
             selectArrowWidth: 30,
-            styledClass: ''
+            styledClass: '',
+            pollFrequency: 1000
+        },
+
+        /**
+         * Collection of all styled elements on the page as jQuery objects
+         *
+         * @type {Array}
+         */
+        _elements: [],
+
+        /**
+         * Adds an element to the elements array
+         */
+        addElement : function($el) {
+            if (!$el instanceof jQuery) {
+                $el = $($el);
+            }
+            this._elements.push($el);
+        },
+
+        /**
+         * Polls for element changes.
+         *
+         * Checks to see if any styled elements have mutated and updates their styledForm
+         * counterparts accordingly.
+         */
+        poll : function() {
+            var s = $.styledForm;
+            $.each(s._elements, function(i, el) {
+                var $el = $(el), $input;
+                if ($el.hasClass('select')) {
+                    $input = $el.next('select');
+                } else {
+                    $input = $el.next('input');
+                }
+
+                if ($input.attr('disabled') && !$el.hasClass('disabled')) {
+                    $el.addClass('disabled');
+                } else if (!$input.attr('disabled') && $el.hasClass('disabled')) {
+                    $el.removeClass('disabled');
+                }
+            });
         },
 
         /**
