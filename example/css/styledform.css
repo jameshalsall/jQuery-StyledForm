@@ -56,3 +56,14 @@ form.styled select {
     height: 22px;
     background: url('../images/checkbox.png') no-repeat;
 }
+
+.disabled {
+    opacity: 0.4;
+    filter: "alpha(opacity=40)";
+}
+
+div {
+    margin: 10px;
+    border: #000 1px solid;
+    padding: 10px;
+}

@@ -4,19 +4,15 @@
     <title>Styled Form Example</title>
 
     <script type='text/javascript' src='http://code.jquery.com/jquery-1.8.3.min.js'></script>
-    <script type='text/javascript' src='../src/jquery.styledform.min.js'></script>
+    <script type='text/javascript' src='../src/jquery.styledform.js'></script>
 
     <link href="css/styledform.css" media="screen" rel="stylesheet" type="text/css">
-
-    <style>
-        div {
-            margin: 10px;
-            border: #000 1px solid;
-            padding: 10px;
-        }
-    </style>
 </head>
 <body>
+
+    <h1>jQuery StyledForm Examples</h1>
+
+    <h2>Unstyled Form</h2>
     <form>
         <div>
             <input type="radio" id="radio-sampleA" name="sample1" checked='checked' />
@@ -44,6 +40,7 @@
         </div>
     </form>
 
+    <h2>Styled Form</h2>
     <form class='styled'>
         <div>
             <input type="radio" id="radio-sampleC" name="sample1" checked='checked' />
@@ -73,8 +70,39 @@
         </div>
     </form>
 
+    <h2>Disabled Elements</h2>
+    <form class='styled'>
+        <div>
+            <input type="radio" name="sample3" id="radio-sampleG" checked="checked" disabled="disabled">
+            <label for="radio-sampleG">
+                Radio Option G
+            </label>
+            <input type="radio" name="sample3" id="radio-sampleH" disabled="disabled">
+            <label for="radio-sampleH">
+                Radio Option H
+            </label>
+        </div>
+        <div>
+            <label for="select-sample-3">Example Select</label>
+            <div class='select-holder'>
+                <select class='styled' name='sample4' id="select-sample-3" disabled="disabled">
+                    <option value='1'>Option 1</option>
+                    <option value='2'>Option 2</option>
+                    <option value='3'>Option 3</option>
+                    <option value='4'>Option 4</option>
+                    <option value='5'>Option 5</option>
+                </select>
+            </div>
+        </div>
+        <div>
+            <label for="check-sample-3">Remember me?</label>
+            <input type="checkbox" id="check-sample-3" value='1' name='sample4' disabled="disabled" />
+        </div>
+    </form>
+
     <script type='text/javascript'>
 //        $.styledForm.config.styledClass = 'styled';
+//        $.styledForm.config.pollFrequency = false;
         $('form.styled').styledForm();
     </script>
 
