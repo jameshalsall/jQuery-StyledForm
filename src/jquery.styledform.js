@@ -292,6 +292,9 @@
          * @private
          */
         _canonicalize : function(string) {
+            if (!string) {
+                return '';
+            }
             return $.trim(string.replace('[', '').replace(']', '-'));
         }
     };
