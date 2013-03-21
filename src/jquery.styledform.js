@@ -6,7 +6,7 @@
  * @author  James Halsall <james.t.halsall@googlemail.com>
  * @link    http://www.github.com/jaitsu87/jQuery-StyledForm
  * @license GPL (http://www.gnu.org/licenses/gpl-3.0.html)
- * @version 1.1.0
+ * @version 1.1.1
  */
 (function($) {
 
