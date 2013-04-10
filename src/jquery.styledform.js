@@ -6,7 +6,7 @@
  * @author  James Halsall <james.t.halsall@googlemail.com>
  * @link    http://www.github.com/jaitsu87/jQuery-StyledForm
  * @license GPL (http://www.gnu.org/licenses/gpl-3.0.html)
- * @version 1.1.1
+ * @version 1.2.0
  */
 (function($) {
 
@@ -32,7 +32,7 @@
                 } else {
                     height = config.radioHeight;
                 }
-                $span.css('background-position', '0 -' + (height * 2) + 'px');
+                $span.css('background-position', '0 -' + (height * 2) + 'px').attr('data-checked', 1);
             }
 
             if ($(input).attr('type') == 'radio') {
@@ -127,6 +127,7 @@
             this._elements.push($el);
         },
 
+
         /**
          * Polls for element changes.
          *
@@ -147,6 +148,15 @@
                     $el.addClass('disabled');
                 } else if (!$input.attr('disabled') && $el.hasClass('disabled')) {
                     $el.removeClass('disabled');
+                }
+
+                if ($input.is('input[type="checkbox"]') || $input.is('input[type="radio"]')) {
+                    var height = ($input.attr('type') == 'checkbox') ? s.config.checkboxHeight : s.config.radioHeight;
+                    if ($input.prop('checked') && !$el.attr('data-checked')) {
+                        $el.css('background-position', '0 -' + (height * 2) + 'px').attr('data-checked', 1);
+                    } else if (!$input.prop('checked') && $el.attr('data-checked')) {
+                        $el.css('background-position', '0 0').removeAttr('data-checked');
+                    }
                 }
             });
         },
@@ -201,38 +211,39 @@
             }
             var config = $.styledForm.config;
             var $target = $(e.target);
-            var $element = $target.next('input');
+            var $input = $target.next('input');
 
             // user has clicked on the label
             if ($target.attr('for')) {
-                $element = $('#' + $target.attr('for'));
-                $target = $element.prev('span');
+                $input = $('#' + $target.attr('for'));
+                $target = $input.prev('span');
             }
 
-            var type = $element.attr('type');
+            var type = $input.attr('type');
 
-            if ($element.attr('disabled') || !$.styledForm._isStyledElement($element)) {
+            if ($input.attr('disabled') || !$.styledForm._isStyledElement($input)) {
                 return;
             }
 
             // for radio buttons, we need to un-check all other radios with the same name in this container
             if (type == 'radio') {
-                var $radios = $(this).find('input[type="radio"][name="' + $element.attr('name') + '"]');
+                var $radios = $(this).find('input[type="radio"][name="' + $input.attr('name') + '"]');
                 $.each($radios, function(i, radio) {
-                    if (radio != $element.get().nextSibling && $(radio).prev()) {
-                        $(radio).prev().css('background-position', '0 0');
+                    if (radio != $input.get().nextSibling && $(radio).prev()) {
+                        $(radio).prev().css('background-position', '0 0').removeAttr('data-checked', 0);
                         $(radio).removeAttr('checked');
                     }
                 });
                 $target.css('background-position', '0 -' + (config.radioHeight * 2) + 'px');
-                $element.prop('checked', true);
+                $target.attr('data-checked', 1);
+                $input.prop('checked', true);
             } else if (type == 'checkbox') {
-                if ($element.prop('checked')) {
-                    $target.css('background-position', '0 0');
-                    $element.removeAttr('checked');
+                if ($input.prop('checked')) {
+                    $target.css('background-position', '0 0').removeAttr('data-checked');
+                    $input.removeAttr('checked');
                 } else {
-                    $target.css('background-position', '0 -' + (config.checkboxHeight * 2) + 'px');
-                    $element.prop('checked', true);
+                    $target.css('background-position', '0 -' + (config.checkboxHeight * 2) + 'px').attr('data-checked', 1);
+                    $input.prop('checked', true);
                 }
             }
         },
@@ -256,10 +267,10 @@
             if (type == 'checkbox') {
                 var $target = $element.parent().find('.checkbox');
                 if ($element.prop('checked')) {
-                    $target.css('background-position', '0 -' + (config.checkboxHeight * 2) + 'px');
+                    $target.css('background-position', '0 -' + (config.checkboxHeight * 2) + 'px').removeAttr('data-checked');
                     $element.removeAttr('checked');
                 } else {
-                    $target.css('background-position', '0 0');
+                    $target.css('background-position', '0 0').attr('data-checked', 1);
                     $element.prop('checked', true);
                 }
             } else if (type != 'radio') {
