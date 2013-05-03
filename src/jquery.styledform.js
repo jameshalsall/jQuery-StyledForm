@@ -306,7 +306,7 @@
             if (!string) {
                 return '';
             }
-            return $.trim(string.replace('[', '').replace(']', '-'));
+            return $.trim(string.replace(/\[/g, '').replace(/\]/g, '-').replace(/\$/g, '_'));
         }
     };
 
